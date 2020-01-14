@@ -1,26 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import WeatherLocation from './components/WeatherLocationProvider.jsx';
+import DisplayWeather from './components/DisplayWeatherData.jsx';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends React.Component{
+  constructor(props){
+    super(props);
+
+    this.state={
+      location: '',
+      locationIsEmpty: true
+    }
+  }
+
+  render(){
+    if(this.state.locationIsEmpty){
+      return (
+        <div className="App">
+          <WeatherLocation sendLocation={this.specifiedLocation.bind(this)} />
+        </div>
+      );
+    } else {
+      return(
+        <div className="weatherDataContainer">
+          <DisplayWeather location={this.state.location} />
+        </div>
+      );
+    }
+  }
+
+  specifiedLocation = (data) => {
+    this.setState({location: data, locationIsEmpty: false})
+  }
+
+
+
+
 }
-
-export default App;
