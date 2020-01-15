@@ -19,22 +19,30 @@ export default class DisplayWeather extends React.Component {
   async getWeatherData(){
     this.setState({loading: true})
     let data = await Weather(this.props.location)
-    this.setState({weatherData: JSON.parse(JSON.stringify(data)), loading: false});
+    console.log(data)
+    this.setState({weatherData: data, loading: false});
   }
 
 
   render(){
-    console.log(this.state)
-    if(this.state.loading === true){
+    if (
+      (this.state.loading)
+    ){
       return(
         <div>
-          <h1> Loading... </h1>
+          <h1>Loading...</h1>
         </div>
       );
-    } else  {
+    } else if (this.state.weatherData && this.state.weatherData.main){
       return(
         <div>
-          <h1> {hello} </h1>
+          <h1> {this.state.weatherData.main.temp} </h1>
+        </div>
+      );
+    } else {
+      return(
+        <div>
+          <h1> Please wait! </h1>
         </div>
       );
     }
